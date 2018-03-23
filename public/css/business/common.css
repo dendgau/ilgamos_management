@@ -1,0 +1,69 @@
+body {
+    font-size: 15px;
+}
+#sidebar {
+    background-color: #38424D;
+    position: fixed;
+    top: 0;
+    width: 250px;
+    bottom: 0;
+    left: 0;
+}
+#sidebar a {
+    text-decoration: none;
+}
+#sidebar a, #sidebar p{
+    color: #bbb;
+}
+#sidebar #header-wrapper {
+    float: left;
+    width: 100%;
+}
+#sidebar #header-wrapper #header {
+    color: white;
+    background: #1694CA;
+    text-align: center;
+    padding: 1rem;
+}
+#sidebar #header-wrapper .left-menu-bar {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+    list-style: none;
+    padding: 0px;
+}
+#sidebar #header-wrapper .left-menu-bar li {
+    padding: 10px;
+    border-bottom: 1px dotted white;
+    font-size: 15px;
+}
+#sidebar #header-wrapper .left-menu-bar li i{
+    font-size: 20px;
+    margin-right: 7px;
+}
+#sidebar #header-wrapper .left-menu-bar li.active {
+    color: #555!important;
+    background-color: white;
+}
+#sidebar #header-wrapper .left-menu-bar li.active a {
+    color: #555!important;
+}
+#sidebar #header-wrapper #footer{
+    padding: 10px;
+    font-size: 13px;
+    float: left;
+}
+#sidebar #header-wrapper #footer p{
+    margin-bottom: 5px;
+}
+#sidebar #header-wrapper #footer a{
+    text-decoration: underline;
+}
+#body {
+    position: relative;
+    margin-left: 250px;
+    min-height: 100%;
+}
+.ILcontainer {
+    padding: 30px 50px
+}

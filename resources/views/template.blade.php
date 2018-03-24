@@ -22,7 +22,7 @@
                     <h5>ILGAMOS BAR</h5>
                 </div>
                 <ul class="left-menu-bar">
-                    <li class="active"><a href=""><i class="fa fa-cart-plus"></i> Quản lý bán hàng</a></li>
+                    <li class="active"><a href="{{ url('/business/contract/show') }}"><i class="fa fa-cart-plus"></i> Quản lý bán hàng</a></li>
                     <li><a href=""><i class="fa fa-coffee"></i> Quản lý sản phẩm</a></li>
                     <li><a href=""><i class="fa fa-bank"></i> Quản lý phiếu chi</a></li>
                     <li><a href=""><i class="fa fa-area-chart"></i> Thống kê doanh thu</a></li>

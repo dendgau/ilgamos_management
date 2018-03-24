@@ -55,7 +55,7 @@
             {{$links}}
         </div>
         <div class="col-4" style="text-align: right">
-            <a class="btn btn-warning" href="#" role="button"><i class="fa fa-file-text-o"></i> Tạo hóa đơn</a>
+            <a class="btn btn-warning" href="{{ url('/business/contract/create') }}" role="button"><i class="fa fa-file-text-o"></i> Tạo hóa đơn</a>
         </div>
     </div>
     <div class="table-responsive">
@@ -64,7 +64,7 @@
                 <table class="table table-contract">
                     <tr>
                         <th class="head1" rowspan="5" style="border-top: 1px dotted black;">
-                            <span>Số HĐ: <a href="">HD00{{$contract->id}}</a></span><br/>
+                            <span>Số HĐ: <a href="{{ url('/business/contract/edit/contract_id/' . $contract->id) }}">HD00{{$contract->id}}</a></span><br/>
                             <span style="font-weight: normal">{{$contract->created_at}}</span>
                             @if (!$contract->is_finished)
                                 <span class="bound-button" style="margin-top: 20px">
@@ -81,7 +81,7 @@
                         <th class="head2" style="border-top: 1px dotted black;">Tên khách hàng</th>
                         <td class="child" style="border-top: 1px dotted black;">{{$contract->customer_name}}</td>
                         <th class="head2" style="border-top: 1px dotted black; border-left: 1px dotted #adadad;">Số bàn</th>
-                        <td class="table-number" style="border-top: 1px dotted black;">{{$contract->table_number}}</td>
+                        <td class="table-number" style="border-top: 1px dotted black;">{{get_table_name_by_key($contract->table_number)}}</td>
                     </tr>
                     <tr>
                         <th class="head2">Món đã gọi</th>
@@ -145,19 +145,19 @@
             {{$links}}
         </div>
         <div class="col-4" style="text-align: right">
-            <a class="btn btn-warning" href="#" role="button"><i class="fa fa-file-text-o"></i> Tạo hóa đơn</a>
+            <a class="btn btn-warning" href="{{ url('/business/contract/create') }}" role="button"><i class="fa fa-file-text-o"></i> Tạo hóa đơn</a>
         </div>
     </div>
 
     <!-- For add order -->
-    <div class="modal fade" id="add_order" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal_add_order" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     Thêm món mới
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="modal_contract_id" value="">
+                    <input type="hidden" name="modal_hidden_contract_id">
                     <label for="menu-select2" style="width: 100%; float: left"><strong>Món ăn</strong></label>
                     <select id="menu-select2" style="width: 50%; float: left">
                         <option value="-1">== Chọn món ở đây ==</option>
@@ -171,7 +171,7 @@
                     </select>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered modal_add_order" style="display: none; margin-top: 20px">
+                        <table class="table table-bordered modal_table_order_detail" style="display: none; margin-top: 20px">
                             <thead>
                                 <tr>
                                     <th>Tên món</th>
@@ -185,7 +185,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-default save">Đồng ý thêm món</button>
                 </div>
             </div>
         </div>

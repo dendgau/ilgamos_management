@@ -64,16 +64,16 @@ $(document).ready(function() {
         var contract_id  = $(this).closest('.table-contract').find('input.contract_id').val(),
             table_number = $(this).closest('.table-contract').find('.table-number').html();
 
-        $('#add_order .modal-header').html('<h6>Thêm món cho bàn <strong>' + table_number + '</strong> - Hóa đơn số <strong>' + 'HD00' + contract_id + '</strong></h6>');
-        $('#add_order input[name=modal_contract_id]').val(contract_id);
-        $('#add_order #menu-select2').select2();
-        $('#add_order').modal({backdrop: 'static', keyboard: false});
+        $('#modal_add_order .modal-header').html('<h6>Thêm món cho bàn <strong>' + table_number + '</strong> - Hóa đơn số <strong>' + 'HD00' + contract_id + '</strong></h6>');
+        $('#modal_add_order input[name=modal_hidden_contract_id]').val(contract_id);
+        $('#modal_add_order #menu-select2').val(-1).select2();
+        $('#modal_add_order').modal({backdrop: 'static', keyboard: false});
     });
 
-    $('#add_order #menu-select2').on('select2:select', function (e) {
+    $('#modal_add_order #menu-select2').on('select2:select', function (e) {
         var data = e.params.data;
         if (data.id == -1) return;
-        if ($('table.modal_add_order tbody #modal_row_order_detail_' + data.id).length > 0) return;
+        if ($('table.modal_table_order_detail tbody #modal_row_order_detail_' + data.id).length > 0) return;
 
         var html =
             "<tr id='modal_row_order_detail_"+data.id+"'>" +
@@ -82,30 +82,30 @@ $(document).ready(function() {
                 "<td style='text-align: center'><button class='btn btn-sm btn-danger modal_remove_order_detail'>Xóa</button></td>" +
             "</tr>";
 
-        $('#add_order table.modal_add_order tbody').append(html);
-        $('#add_order table.modal_add_order').show();
+        $('#modal_add_order table.modal_table_order_detail tbody').append(html);
+        $('#modal_add_order table.modal_table_order_detail').show();
     });
 
-    $('body').on('click', '#add_order .modal_remove_order_detail', function() {
+    $('body').on('click', '#modal_add_order .modal_remove_order_detail', function() {
         $(this).closest('tr').remove();
-        if ($('#add_order table.modal_add_order tbody tr').length == 0) {
-            $('#add_order table.modal_add_order').hide();
+        if ($('#modal_add_order table.modal_table_order_detail tbody tr').length == 0) {
+            $('#modal_add_order table.modal_table_order_detail').hide();
         }
     });
 
-    $('body').on('click', '#add_order .modal-footer button', function() {
-        var contract_id = $('#add_order input[name=modal_contract_id]').val(),
+    $('body').on('click', '#modal_add_order .modal-footer button.save', function() {
+        var contract_id = $('#modal_add_order input[name=modal_hidden_contract_id]').val(),
             product_ids = [],
             me = $(this);
 
-        $( "#add_order table.modal_add_order tbody tr" ).each(function( index ) {
-            var idrow = $(this).attr('id');
-            idrow = idrow.split("_")[4];
-            product_ids.push(idrow);
+        $("#modal_add_order table.modal_table_order_detail tbody tr").each(function(index) {
+            var product_id = $(this).attr('id');
+            product_id = product_id.split("_")[4];
+            product_ids.push(product_id);
         });
 
         if (product_ids.length <= 0) {
-            $('#add_order').modal('hide');
+            $('#modal_add_order').modal('hide');
             return;
         }
 
@@ -129,12 +129,16 @@ $(document).ready(function() {
                     show_dialog('error', 'Không thể cập nhật số lượng món');
                 }
 
-                $('#add_order table.modal_add_order tbody').html("");
-                $('#add_order table.modal_add_order').hide();
-                $('#add_order').modal('hide');
-
+                $('#modal_add_order').modal('hide');
                 stop_ajax_process(me, true, '');
             }
         });
+    });
+
+    $("#modal_add_order").on("hidden.bs.modal", function () {
+        $("#modal_add_order #menu-select2").select2('destroy');
+        $('#modal_add_order input[name=modal_hidden_contract_id]').val('');
+        $('#modal_add_order table.modal_table_order_detail tbody').html("");
+        $('#modal_add_order table.modal_table_order_detail').hide();
     });
 });

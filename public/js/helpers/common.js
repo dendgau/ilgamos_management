@@ -4,9 +4,9 @@ function check_ajax_running() {
     return is_running_ajax;
 }
 
-function start_ajax_process(elem, show_loading_text) {
+function start_ajax_process(elem, is_show_loading_text) {
     // Add loading icon
-    var loading_element = show_loading_text ? '<span class="loadding"><i class="fa fa-refresh fa-spin" style="font-size:16px"></i> Đang xử lý</span>' : '<span class="loadding"><i class="fa fa-refresh fa-spin" style="font-size:16px"></i></span>';
+    var loading_element = is_show_loading_text ? '<span class="loadding"><i class="fa fa-refresh fa-spin" style="font-size:16px"></i> Đang xử lý</span>' : '<span class="loadding"><i class="fa fa-refresh fa-spin" style="font-size:16px"></i></span>';
 
     elem.after(loading_element);
     elem.hide();
@@ -14,11 +14,11 @@ function start_ajax_process(elem, show_loading_text) {
     is_running_ajax = true;
 }
 
-function stop_ajax_process(element, is_error_ajax, html) {
+function stop_ajax_process(element, is_keep_element, html) {
     // Remove loading icon
     element.parent().children('.loadding').remove();
 
-    if (is_error_ajax) {
+    if (is_keep_element) {
         element.show();
     } else if (html) {
         element.parent().html(html);

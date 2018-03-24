@@ -51,6 +51,14 @@ if ( ! function_exists('calculate_total_price'))
     }
 }
 
+if ( ! function_exists('get_table_name_by_key'))
+{
+    function get_table_name_by_key($key) {
+        $table_names = \App\Models\ContractModel::TABLES_NAME;
+        return array_key_exists($key, $table_names) ? $table_names[$key] : '';
+    }
+}
+
 if ( ! function_exists('ajax_response_order_detail'))
 {
     function ajax_response_order_detail($order_details) {

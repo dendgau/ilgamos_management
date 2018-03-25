@@ -1,6 +1,8 @@
 @extends('template')
 
 @section('title')
+    <span>Quản lí bán hàng</span>
+    <i class="fa fa-angle-right"></i>
     <span>Số HĐ: <a href="{{ url('/business/contract/edit/contract_id/' . $contract->id) }}">HD00{{$contract->id}}</a></span>
     <i class="fa fa-angle-right"></i>
     <span>Phần 2: Sửa thông tin khách hàng và gọi thêm món</span>
@@ -36,7 +38,7 @@
             margin-bottom: 10px
         }
         .column_table_order_detail table thead th:nth-child(6){
-            width: 80px!important;
+            width: 100px!important;
             text-align: center;
         }
         .column_table_order_detail table thead th:nth-child(1){
@@ -48,9 +50,21 @@
         .column_table_order_detail table thead th:nth-child(4){
             width: 90px!important;
         }
+        .column_table_order_detail table thead th {
+            text-align: center;
+        }
+        .column_table_order_detail table thead th:nth-child(2) {
+            text-align: left;
+        }
         .text-danger {
             margin-top: 5px;
             float: left;
+        }
+        .column_table_order_detail table thead th, .modal_table_order_detail thead th {
+            text-align: center;
+        }
+        .column_table_order_detail table thead th:nth-child(2), .modal_table_order_detail thead th:nth-child(1) {
+            text-align: left;
         }
     </style>
 @endsection
@@ -87,13 +101,13 @@
                 </tr>
                 <tr>
                     <td colspan="4" class="child" style="border-bottom: 1px dotted black;">
-                        @if (!$contract->is_finished && !$contract->disable)
-                            <button type="submit" class="btn btn-secondary btn-sm "><i class="fa fa-plus"></i> Lưu thay đổi</button>
-                            <button type="submit" formaction="{{ url('/business/contract/delete/contract_id/' . $contract->id) }}" class="btn btn-danger btn-sm "><i class="fa fa-remove"></i> Xóa hóa đơn</button>
-                        @elseif ($contract->disable)
-                            <i class="fa fa-lock" style="color: red"></i> Tình trạng hóa đơn: Đã bị xóa
-                        @elseif ($contract->is_finished)
-                            <span style="color: green"><i class="fa fa-check" style="color: green"></i> Tình trạng hóa đơn: Đã thanh toán</span>
+                        @if (!$contract->disable)
+                            @if (!$contract->is_finished)
+                                <button type="submit" class="btn btn-secondary btn-sm btn_update_contract"><i class="fa fa-plus"></i> Lưu thay đổi</button>
+                            @endif
+                            <button type="submit" formaction="{{ url('/business/contract/delete/contract_id/' . $contract->id) }}" class="btn btn-danger btn-sm btn_remove_contract"><i class="fa fa-remove"></i> Xóa hóa đơn</button>
+                        @else
+                            Liên hệ admin để mở lại hóa đơn này. ()
                         @endif
                     </td>
                 </tr>
@@ -113,13 +127,13 @@
 
         @if (!$contract->is_finished && !$contract->disable)
             <span class="bound-button">
-                <button type="button" class="btn btn-secondary btn-sm add_order"><i class="fa fa-plus"></i> Thêm món</button>
+                <button type="button" style="margin-right: 10px" class="btn btn-secondary btn-sm add_order"><i class="fa fa-plus"></i> Thêm món</button>
             </span>
-            <span class="bound-button" style="margin-left: 10px">
-                <button type="button" class="edit btn btn-success btn-sm process_payment"><i class="fa fa-hand-o-right"></i> Click thanh toán!</button>
+            <span class="bound-button">
+                <button type="button" style="margin-right: 10px" class="edit btn btn-success btn-sm process_payment"><i class="fa fa-hand-o-right"></i> Click thanh toán!</button>
             </span>
         @endif
-        <span class="bound-button" @if (!$contract->is_finished && !$contract->disable)style="margin-left: 10px"@endif>
+        <span class="bound-button">
             <button type="button" class="edit btn btn-primary btn-sm"><i class="fa fa-print"></i> In hóa đơn</button>
         </span>
         <div class="table-responsive column_table_order_detail">
@@ -130,19 +144,19 @@
                     <th>Đơn giá</th>
                     <th>Số lượng</th>
                     <th>Tổng tiền</th>
-                    <th></th>
+                    <th>Thêm/Xóa</th>
                 </thead>
                 <tbody>
                     @foreach ($contract->order_detail as $key => $o)
                         @if($o->amount > 0)
                             <tr>
-                                <td>{{$key + 1}}</td>
+                                <td style="text-align: center">{{$key + 1}}</td>
                                 <td>{{$o->product_name}}</td>
-                                <td>{{format_money($o->unit_price)}}</td>
-                                <td>x{{$o->amount}}</td>
-                                <td>{{format_money($o->total_price)}}</td>
-                                <td>
-                                    @if (!$contract->is_finished && !$contract->disable)
+                                <td style="text-align: center">{{format_money($o->unit_price)}}</td>
+                                <td style="text-align: center"x{{$o->amount}}</td>
+                                <td style="text-align: center">{{format_money($o->total_price)}}</td>
+                                <td style="text-align: center">
+                                    @if (!$contract->disable && !$contract->is_finished)
                                         <button data-order_detail_id="{{$o->id}}" class="add_order_detail btn-default btn-sm"><i class="fa fa-plus"></i></button>
                                         <button data-order_detail_id="{{$o->id}}" class="remove_order_detail btn-default btn-sm"><i class="fa fa-minus"></i></button>
                                     @endif
@@ -153,11 +167,25 @@
                 </tbody>
             </table>
         </div>
-        <h5>
+        <h5 style="float: left">
             Tổng tiền: <span class="column_total_price">{{format_money($contract->total_price)}}</span>
+        </h5>
+        <h5 style="float: right">
+            Tình trạng:
+            <span class="column_state">
+                @if ($contract->is_finished)
+                    <span style="color: green"><i class="fa fa-check" style="color: green"></i> Đã thanh toán</span>
+                @else
+                    <span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa thanh toán</span>
+                @endif
+            </span>
         </h5>
     </div>
 
+    <div style="float: left; width: 100%; margin-top: 20px">
+        <a class="btn btn-warning" style="margin-right: 5px" href="{{ url('/business/contract/show') }}" role="button"><i class="fa fa-arrow-left"></i> Quay về màn hình chính</a>
+        <a class="btn btn-warning" href="{{ url('/business/contract/create') }}" role="button"><i class="fa fa-file-text-o"></i> Tạo hóa đơn khác</a>
+    </div>
 
     <!-- For add order -->
     <div class="modal fade" id="modal_add_order" role="dialog" aria-hidden="true">
@@ -186,7 +214,7 @@
                             <tr>
                                 <th>Tên món</th>
                                 <th style="width: 90px;">Số lượng</th>
-                                <th style="width: 70px;"></th>
+                                <th style="width: 70px;">Xóa</th>
                             </tr>
                             </thead>
                             <tbody>

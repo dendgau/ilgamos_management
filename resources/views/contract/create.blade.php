@@ -1,6 +1,8 @@
 @extends('template')
 
 @section('title')
+    <span>Quản lí bán hàng</span>
+    <i class="fa fa-angle-right"></i>
     <span>Tạo hóa đơn</span>
     <i class="fa fa-angle-right"></i>
     <span>Bước 1: Thông tin khách hàng</span>
@@ -26,28 +28,6 @@
             border-top: 1px dotted #adadad;
             border-right: 1px dotted #adadad;
         }
-        .table-contract .add_order_detail, .table-contract .remove_order_detail {
-            padding: 0px 4px;
-            font-size: 11px;
-        }
-        .bound-button {
-            width: 100%;
-            float: left;
-            text-align: center;
-        }
-        .column_table_order_detail table thead th:nth-child(6){
-            width: 80px!important;
-            text-align: center;
-        }
-        .column_table_order_detail table thead th:nth-child(1){
-            width: 45px!important;
-        }
-        .column_table_order_detail table thead th:nth-child(3), .column_table_order_detail table thead th:nth-child(5){
-            width: 120px!important;
-        }
-        .column_table_order_detail table thead th:nth-child(4){
-            width: 90px!important;
-        }
         .text-danger {
             margin-top: 5px;
             float: left;
@@ -60,7 +40,7 @@
     <div class="table-responsive" style="margin-top: 15px">
         {!! Form::open(['url' => Request::url()]) !!}
             {!! csrf_field() !!}
-            <table class="table table-contract">
+            <table class="table table-contract" style="margin-bottom: 20px;">
                 <tr>
                     <th class="head1" rowspan="5" style="border-top: 1px dotted black;">
                         <span>Hóa đơn ngày:</span><br/>
@@ -87,4 +67,5 @@
             </table>
         {!! Form::close()  !!}
     </div>
+    <a class="btn btn-warning" href="{{ url('/business/contract/show') }}" role="button"><i class="fa fa-arrow-left"></i> Quay về màn hình chính</a>
 @endsection

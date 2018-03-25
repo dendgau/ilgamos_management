@@ -18,6 +18,8 @@ $(document).ready(function() {
                     me.closest('.table-contract').find('.add_order_detail').remove();
                     me.closest('.table-contract').find('.remove_order_detail').remove();
                     me.closest('.table-contract').find('.column_state').html('<span style="color: green"><i class="fa fa-check" style="color: green"></i> Đã thanh toán</span>');
+                    // For hard code screen update
+                    me.closest('body').find('.btn_update_contract').remove();
                     stop_ajax_process(me, false, '');
                 } else {
                     show_dialog('error', 'Không thể cập nhật trạng thái hóa đơn.');

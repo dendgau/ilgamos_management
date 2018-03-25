@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ContractModel;
 use App\Models\ProductModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class ContractController extends Controller
 {
@@ -34,12 +36,23 @@ class ContractController extends Controller
     function create(Request $request) {
         if ($request->isMethod('post')) {
             if ($this->_process_form_validation(__FUNCTION__, $request)) {
-                $new_contract = new ContractModel();
-                $new_contract->staff_name    = 'Duy Tran';
-                $new_contract->customer_name = $request->customer_name;
-                $new_contract->table_number  = $request->table_number;
-                if ($new_contract->save()) {
-                    return redirect('business/contract/edit/contract_id/'.$new_contract->id);
+                try {
+                    DB::beginTransaction();
+                        $new_contract = new ContractModel();
+                        $new_contract->staff_name    = 'Duy Tran';
+                        $new_contract->customer_name = $request->customer_name;
+                        $new_contract->table_number  = $request->table_number;
+                        if (!$new_contract->save()) {
+                            throw new \Exception('Can not create new contract');
+                        }
+                    DB::commit();
+
+                    $request->session()->flash('message', 'Tạo thông tin khách hàng thành công. Xin hãy thêm món vào hóa đơn ở mục 2');
+                    return Redirect::to('business/contract/edit/contract_id/'.$new_contract->id)->send();
+                    exit;
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    $request->session()->flash('error', 'Không thể tạo hóa đơn mới. Xin vui lòng thử lại');
                 }
             }
         }
@@ -50,20 +63,33 @@ class ContractController extends Controller
     }
 
     function edit(Request $request) {
-        if (!($contract_id = $request->route('contract_id')) && !is_numeric($contract_id)) {
-            redirect('business/contract/show');
+        if (!($contract_id = $request->route('contract_id'))) {
+            $request->session()->flash('error', 'Không tìm thấy mã hóa đơn');
+            Redirect::to('business/contract/show')->send();
         }
 
-        if (!$contract = ContractModel::find($contract_id)) {
-            redirect('business/contract/show');
+        if (!($contract = ContractModel::find($contract_id))) {
+            $request->session()->flash('error', 'Không tìm thấy mã hóa đơn HD00'. $contract_id);
+            Redirect::to('business/contract/show')->send();
         }
 
         if ($request->isMethod('post')) {
             if ($this->_process_form_validation(__FUNCTION__, $request)) {
-                $contract->customer_name = $request->customer_name;
-                $contract->table_number  = $request->table_number;
-                if ($contract->save()) {
-                    return redirect('business/contract/edit/contract_id/'.$contract->id);
+                try {
+                    DB::beginTransaction();
+                        $contract->customer_name = $request->customer_name;
+                        $contract->table_number  = $request->table_number;
+                        if (!$contract->save()) {
+                            throw new \Exception('Can not update contract');
+                        }
+                    DB::commit();
+
+                    $request->session()->flash('message', 'Cập nhật thông tin khách hàng thành công');
+                    return Redirect::to('business/contract/edit/contract_id/'.$contract->id)->send();
+                    exit;
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    $request->session()->flash('error', 'Không thể cập nhật hóa đơn này. Xin vui lòng thử lại');
                 }
             }
         }
@@ -84,20 +110,24 @@ class ContractController extends Controller
         ));
     }
 
-    function delete (Request $request){
-        if (!($contract_id = $request->route('contract_id')) && !is_numeric($contract_id)) {
-            redirect('business/contract/show');
+    function delete(Request $request){
+        if (!($contract_id = $request->route('contract_id'))) {
+            $request->session()->flash('error', 'Không tìm thấy mã hóa đơn');
+            Redirect::to('business/contract/show')->send();
         }
 
-        if (!$contract = ContractModel::find($contract_id)) {
-            redirect('business/contract/show');
+        if (!($contract = ContractModel::find($contract_id))) {
+            $request->session()->flash('error', 'Không tìm thấy mã hóa đơn HD00'. $contract_id);
+            Redirect::to('business/contract/show')->send();
         }
 
         if ($request->isMethod('post')) {
             $contract->disable  = 1;
-            if ($contract->save()) {
-                return redirect('business/contract/edit/contract_id/'.$contract->id);
+            if (!$contract->save()) {
+                $request->session()->flash('error', 'Không thể xóa hóa đơn này. Xin vui lòng thử lại');
             }
+            return Redirect::to('business/contract/edit/contract_id/'.$contract->id)->send();
+            exit;
         }
     }
 

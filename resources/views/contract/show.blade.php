@@ -2,6 +2,8 @@
 
 @section('title')
     <span>Quản lí bán hàng</span>
+    <i class="fa fa-angle-right"></i>
+    <span>Danh sách hóa đơn</span>
 @endsection
 
 @section('extra_css')
@@ -34,7 +36,7 @@
             text-align: center;
         }
         .column_table_order_detail table thead th:nth-child(6){
-            width: 80px!important;
+            width: 100px!important;
             text-align: center;
         }
         .column_table_order_detail table thead th:nth-child(1){
@@ -46,10 +48,17 @@
         .column_table_order_detail table thead th:nth-child(4){
             width: 90px!important;
         }
+        .column_table_order_detail table thead th, .modal_table_order_detail thead th {
+            text-align: center;
+        }
+        .column_table_order_detail table thead th:nth-child(2), .modal_table_order_detail thead th:nth-child(1) {
+            text-align: left;
+        }
     </style>
 @endsection
 
 @section('content')
+    <h5>Danh sách hóa đơn</h5>
     <div class="row">
         <div class="col-8">
             {{$links}}
@@ -94,18 +103,18 @@
                                         <th>Đơn giá</th>
                                         <th>Số lượng</th>
                                         <th>Tổng tiền</th>
-                                        <th></th>
+                                        <th>Thêm/Xóa</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($contract->order_detail as $key => $o)
                                             @if($o->amount > 0)
                                                 <tr>
-                                                    <td>{{$key + 1}}</td>
+                                                    <td style="text-align: center">{{$key + 1}}</td>
                                                     <td>{{$o->product_name}}</td>
-                                                    <td>{{format_money($o->unit_price)}}</td>
-                                                    <td>x{{$o->amount}}</td>
-                                                    <td>{{format_money($o->total_price)}}</td>
-                                                    <td>
+                                                    <td style="text-align: center">{{format_money($o->unit_price)}}</td>
+                                                    <td style="text-align: center">x{{$o->amount}}</td>
+                                                    <td style="text-align: center">{{format_money($o->total_price)}}</td>
+                                                    <td style="text-align: center">
                                                         @if (!$contract->is_finished)
                                                             <button data-order_detail_id="{{$o->id}}" class="add_order_detail btn-default btn-sm"><i class="fa fa-plus"></i></button>
                                                             <button data-order_detail_id="{{$o->id}}" class="remove_order_detail btn-default btn-sm"><i class="fa fa-minus"></i></button>
@@ -176,7 +185,7 @@
                                 <tr>
                                     <th>Tên món</th>
                                     <th style="width: 90px;">Số lượng</th>
-                                    <th style="width: 70px;"></th>
+                                    <th style="width: 70px;">Xóa</th>
                                 </tr>
                             </thead>
                             <tbody>

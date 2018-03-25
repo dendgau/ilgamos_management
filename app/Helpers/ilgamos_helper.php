@@ -59,6 +59,50 @@ if ( ! function_exists('get_table_name_by_key'))
     }
 }
 
+if ( ! function_exists('get_product_type_id_by_key'))
+{
+    function get_product_type_id_by_key($key) {
+        $product_type = \App\Models\ProductModel::PRODUCT_TYPES;
+        return array_key_exists($key, $product_type) ? $product_type[$key] : false;
+    }
+}
+
+if ( ! function_exists('show_message'))
+{
+    function show_message() {
+        $alert_type = '';
+        $icon_type  = '';
+        if ($message = session('message')) {
+            $alert_type = 'success';
+            $icon_type  = 'fa-info-circle';
+        } else if ($message = session('error')) {
+            $alert_type = 'danger';
+            $icon_type  = 'fa-warning';
+        }
+
+        if (!empty($alert_type)) {
+            ?>
+                <div class="alert alert-<?php echo $alert_type; ?> global-alert alert-dismissible fade show" role="alert">
+                    <strong><i class="fa <?php echo $icon_type; ?>"></i> <span style="text-decoration: underline">THÔNG BÁO</span>: <?php echo $message; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php
+        }
+    }
+}
+
+if ( ! function_exists('active_menu'))
+{
+    function active_menu($key) {
+        $current_url = url()->current();
+        if (strpos($current_url, $key) !== false) {
+            echo 'active';
+        }
+    }
+}
+
 if ( ! function_exists('ajax_response_order_detail'))
 {
     function ajax_response_order_detail($order_details) {
@@ -76,18 +120,18 @@ if ( ! function_exists('ajax_response_order_detail'))
                             <th>Đơn giá</th>
                             <th>Số lượng</th>
                             <th>Tổng tiền</th>
-                            <th></th>
+                            <th>Thêm/Xóa</th>
                         </thead>
                         <tbody>
                             <?php foreach ($order_details as $key => $o): ?>
                                 <?php if($o['amount'] > 0): ?>
                                     <tr>
-                                        <td><?php echo ($key + 1) ?></td>
+                                        <td style="text-align: center"><?php echo ($key + 1) ?></td>
                                         <td><?php echo $o['product_name'] ?></td>
-                                        <td><?php echo format_money($o['unit_price']) ?></td>
-                                        <td>x<?php echo $o['amount'] ?></td>
-                                        <td><?php echo format_money($o['total_price']) ?></td>
-                                        <td>
+                                        <td style="text-align: center"><?php echo format_money($o['unit_price']) ?></td>
+                                        <td style="text-align: center">x<?php echo $o['amount'] ?></td>
+                                        <td style="text-align: center"><?php echo format_money($o['total_price']) ?></td>
+                                        <td style="text-align: center">
                                             <button data-order_detail_id="<?php echo $o['id'] ?>" class="add_order_detail btn-default btn-sm"><i class="fa fa-plus"></i></button>
                                             <button data-order_detail_id="<?php echo $o['id'] ?>" class="remove_order_detail btn-default btn-sm"><i class="fa fa-minus"></i></button>
                                         </td>

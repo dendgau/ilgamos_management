@@ -17,7 +17,7 @@ Route::match(array('GET','POST'), '/business/contract/create', 'Business\Contrac
 Route::match(array('GET','POST'), 'business/contract/edit/contract_id/{contract_id}/', 'Business\ContractController@edit');
 Route::match(array('POST'), 'business/contract/delete/contract_id/{contract_id}/', 'Business\ContractController@delete');
 
-
+Route::get('/business/product/show', 'Business\ProductController@show');
 Route::match(array('GET','POST'),'/business/product/create', 'Business\ProductController@create');
 Route::match(array('GET','POST'),'/business/product/edit/product_id/{product_id}', 'Business\ProductController@edit');
 

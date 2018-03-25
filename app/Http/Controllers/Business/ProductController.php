@@ -13,13 +13,11 @@ use Illuminate\Support\Facades\Redirect;
 class ProductController extends Controller
 {
     function show() {
-        $product_type = ProductModel::PRODUCT_TYPES_LANG;
-        $products  = ProductModel::orderBy('update_at', 'DESC')->paginate(20);
+        $products  = ProductModel::orderBy('product_type', 'DESC')->paginate(15);
         $links     = $products->links("pagination::bootstrap-4");
         $total     = $products->total();
 
         return view('product\show')->with(array(
-            'product_type'  => $product_type,
             'products'      => $products,
             'links'         => $links,
             'total'         => $total,

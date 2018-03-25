@@ -45,6 +45,72 @@
                 @section('content')
                 @show
             </div>
+            <div id="print" style="width: 250px; float: left; padding: 0px">
+                <div style="width: 100%; float: left">
+                    <h5 style="text-align: center">ILGAMOS RETAURANT</h5>
+                    <p style="text-align: center; margin-bottom: 0px; font-size: 12px">********************</p>
+                    <p style="text-align: center; margin-bottom: 0px; font-size: 12px">42 To Hien Thanh - Nha Trang - Khanh Hoa</p>
+                    <p style="text-align: center; margin-bottom: 0px; font-size: 12px">0258 3510 843 - 0903 557 343</p>
+                    <p style="text-align: center; font-size: 12px; margin-bottom: 0px">hoangduyhotel@yahoo.com.vn</p>
+                    <br>
+                    <p style="text-align: center; margin-bottom: 0px; font-size: 12px">---------------------------------------------------</p>
+                    <p style="text-align: left; font-size: 12px; margin-bottom: 0px; float: left; width: 100%">
+                        <span style="float:left">No: HD0001</span>
+                        <span style="float:right">Date: 20/10/2018</span>
+                    </p>
+                    <p style="text-align: left; font-size: 12px; margin-bottom: 0px; float: left; width: 100%">
+                        <span style="float:left">Cashier: Vi Quynh Nhu</span>
+                        <span style="float:right">Print: 10:30</span>
+                    </p>
+                    <p style="text-align: center; margin-bottom: 0px; font-size: 12px; float: left">---------------------------------------------------</p>
+                    <table style="width: 250px">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                        <b>1.</b> Meatlovers' supreme pizza, tomato sauce, mozzarella, onion, bacon, sausage, salami
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 15px">
+                                    <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                        <span style="float:left; text-align: left; width: 82px">150,000 vnđ</span>
+                                        <span style="float:left; text-align: center; width: 82px">x2</span>
+                                        <span style="float:right; text-align: right; width: 82px"><b>300,000 vnđ</b></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                        <b>2.</b> Meatlovers' supreme pizza, tomato sauce, mozzarella, onion, bacon, sausage, salami
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                        <span style="float:left; text-align: left; width: 82px">150,000 vnđ</span>
+                                        <span style="float:left; text-align: center; width: 82px">x2</span>
+                                        <span style="float:right; text-align: right; width: 82px"><b>300,000 vnđ</b></span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="text-align: center; margin-bottom: 0px; font-size: 12px; float: left">---------------------------------------------------</p>
+                    <p style="text-align: left; font-size: 12px; margin-bottom: 0px; float: left; width: 100%">
+                        <span style="float:left; font-size: 15px"><b>GRAND TOTAL:</b></span>
+                        <span style="float:right; font-size: 15px"><b>600,000 vnđ</b></span>
+                    </p>
+                    <p style="text-align: center; margin-bottom: 0px; font-size: 12px; float: left">---------------------------------------------------</p>
+
+                    <h6 style="width: 100%;text-align: center;margin-top: 25px;float: left;">Thank you very much</h6>
+                    <h6 style="text-align: center;width: 100%;float: left;">Hope to see you again!!</h6>
+                </div>
+            </div>
+            <button id="aa">aa</button>
         </div>
         <!-- For inform error system -->
         <div class="modal fade" id="notification" tabindex="-1" role="dialog" aria-hidden="true">
@@ -69,6 +135,7 @@
         <script src="{{asset('js/bootstrap/select2.min.js')}}"></script>
         <script src="{{asset('js/business/admin.app.js')}}"></script>
         <script src="{{asset('js/helpers/common.js')}}"></script>
+        <script src="{{asset('js/bootstrap/jquery.print.min.js')}}"></script>
         <script>
             setTimeout(function(){
                 if ($('.global-alert').length > 0) {
@@ -83,6 +150,11 @@
             function get_csrf_token() {
                 return "{{csrf_token()}}";
             }
+
+            $('#aa').click(function(){
+                $("#print").print();
+            })
+
         </script>
         @section('extra_js')
         @show

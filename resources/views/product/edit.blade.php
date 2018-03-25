@@ -99,5 +99,5 @@
         {!! Form::close()  !!}
     </div>
     <a class="btn btn-warning" style="margin-right: 5px" href="{{ url('/business/product/show') }}" role="button"><i class="fa fa-arrow-left"></i> Quay về màn hình chính</a>
-    <a class="btn btn-warning" href="{{ url('/business/product/show') }}" role="button"><i class="fa fa-plus"></i> Tạo sản phẩm khác</a>
+    <a class="btn btn-warning" href="{{ url('/business/product/create') }}" role="button"><i class="fa fa-plus"></i> Tạo sản phẩm khác</a>
 @endsection

@@ -67,6 +67,16 @@ if ( ! function_exists('get_product_type_id_by_key'))
     }
 }
 
+if ( ! function_exists('get_product_type_name_by_key'))
+{
+    function get_product_type_name_by_id($id) {
+        $product_type = \App\Models\ProductModel::PRODUCT_TYPES;
+        $product_type_lang = \App\Models\ProductModel::PRODUCT_TYPES_LANG;
+        $key = array_search($id, $product_type);
+        return array_key_exists($key, $product_type_lang) ? $product_type_lang[$key] : false;
+    }
+}
+
 if ( ! function_exists('show_message'))
 {
     function show_message() {

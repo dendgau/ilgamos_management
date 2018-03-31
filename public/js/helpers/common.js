@@ -45,3 +45,26 @@ function show_dialog(type, content) {
 
     $('#notification').modal();
 }
+
+function get_order_detail_printing(contract_id) {
+    if (contract_id == "") {
+        show_dialog('error', 'Không thể in hóa đơn lúc này')
+        return;
+    }
+
+    $.ajax({
+        url: "/business/contract/ajax_get_order_detail_printing",
+        type: "POST",
+        data: {
+            _token     : get_csrf_token(),
+            contract_id: contract_id
+        },
+        success: function(resp) {
+            if (resp.code == 1) {
+                $('#modal_print').modal('show');
+            } else {
+                show_dialog('error', 'Không thể cập nhật trạng thái hóa đơn.');
+            }
+        }
+    });
+}

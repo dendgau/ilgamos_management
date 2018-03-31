@@ -54,6 +54,18 @@ $(document).ready(function() {
                     stop_ajax_process(me, false, '');
                     parent.find('.column_table_order_detail').html(resp.data.html_order_detail);
                     parent.find('.column_total_price').html(resp.data.html_total_price);
+
+                    if (resp.data.html_order_detail != '') {
+                        parent.find('.column_table_order_detail').removeClass('hide');
+                        parent.find('.process_payment').removeClass('hide');
+                        parent.find('.print').removeClass('hide');
+                        parent.find('.column_state').html('<span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa thanh toán</span>');
+                    } else {
+                        parent.find('.column_table_order_detail').addClass('hide');
+                        parent.find('.process_payment').addClass('hide');
+                        parent.find('.print').addClass('hide');
+                        parent.find('.column_state').html('<span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa gọi món</span>');
+                    }
                 } else {
                     show_dialog('error', 'Không thể cập nhật số lượng món');
                     stop_ajax_process(me, true, '');
@@ -96,6 +108,8 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '#modal_add_order .modal-footer button.save', function() {
+        if (check_ajax_running()) return true;
+
         var contract_id = $('#modal_add_order input[name=modal_hidden_contract_id]').val(),
             product_ids = [],
             me = $(this);
@@ -127,6 +141,18 @@ $(document).ready(function() {
                     var parent = contract_hidden.closest('.table-contract');
                     parent.find('.column_table_order_detail').html(resp.data.html_order_detail);
                     parent.find('.column_total_price').html(resp.data.html_total_price);
+
+                    if (resp.data.html_order_detail != '') {
+                        parent.find('.column_table_order_detail').removeClass('hide');
+                        parent.find('.process_payment').removeClass('hide');
+                        parent.find('.print').removeClass('hide');
+                        parent.find('.column_state').html('<span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa thanh toán</span>');
+                    } else {
+                        parent.find('.column_table_order_detail').addClass('hide');
+                        parent.find('.process_payment').addClass('hide');
+                        parent.find('.print').addClass('hide');
+                        parent.find('.column_state').html('<span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa gọi món</span>');
+                    }
                 } else {
                     show_dialog('error', 'Không thể cập nhật số lượng món');
                 }
@@ -142,5 +168,10 @@ $(document).ready(function() {
         $('#modal_add_order input[name=modal_hidden_contract_id]').val('');
         $('#modal_add_order table.modal_table_order_detail tbody').html("");
         $('#modal_add_order table.modal_table_order_detail').hide();
+    });
+
+    $('body').on('click', '#modal_print_agree', function(){
+        $("#modal_print").modal('close');
+        $("#modal_print_sector").print();
     });
 });

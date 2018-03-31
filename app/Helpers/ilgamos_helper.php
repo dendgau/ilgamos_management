@@ -115,14 +115,16 @@ if ( ! function_exists('active_menu'))
 
 if ( ! function_exists('ajax_response_order_detail'))
 {
-    function ajax_response_order_detail($order_details) {
+    function ajax_response_order_detail($contract_info, $order_details) {
         if (!is_array($order_details)) {
             throw new Exception('Ilgamos bar helpers: Can not get order detail');
         }
 
-        ob_start();
+        $html_order_detail = false;
+        if ($contract_info['total_price'] > 0) {
+            ob_start();
             ?>
-                <div class="table-responsive column_table_order_detail">
+                <!--<div class="table-responsive column_table_order_detail">-->
                     <table class="table table-bordered">
                         <thead>
                             <th>No</th>
@@ -134,26 +136,30 @@ if ( ! function_exists('ajax_response_order_detail'))
                         </thead>
                         <tbody>
                             <?php foreach ($order_details as $key => $o): ?>
-                                <?php if($o['amount'] > 0): ?>
+                                <?php if ($o['amount'] > 0): ?>
                                     <tr>
-                                        <td style="text-align: center"><?php echo ($key + 1) ?></td>
+                                        <td style="text-align: center"><?php echo($key + 1) ?></td>
                                         <td><?php echo $o['product_name'] ?></td>
                                         <td style="text-align: center"><?php echo format_money($o['unit_price']) ?></td>
                                         <td style="text-align: center">x<?php echo $o['amount'] ?></td>
                                         <td style="text-align: center"><?php echo format_money($o['total_price']) ?></td>
                                         <td style="text-align: center">
-                                            <button data-order_detail_id="<?php echo $o['id'] ?>" class="add_order_detail btn-default btn-sm"><i class="fa fa-plus"></i></button>
-                                            <button data-order_detail_id="<?php echo $o['id'] ?>" class="remove_order_detail btn-default btn-sm"><i class="fa fa-minus"></i></button>
+                                            <button data-order_detail_id="<?php echo $o['id'] ?>"
+                                                    class="add_order_detail btn-default btn-sm"><i class="fa fa-plus"></i></button>
+                                            <button data-order_detail_id="<?php echo $o['id'] ?>"
+                                                    class="remove_order_detail btn-default btn-sm"><i class="fa fa-minus"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
+                <!--</div>-->
             <?php
-        $html_order_detail = ob_get_contents();
-        ob_end_clean();
+            $html_order_detail = ob_get_contents();
+            ob_end_clean();
+        }
 
         return $html_order_detail;
     }

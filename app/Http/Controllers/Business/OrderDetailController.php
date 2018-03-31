@@ -80,7 +80,7 @@ class OrderDetailController extends Controller
             }
 
             // START SET RESPONSE
-            $response_data['html_order_detail'] = ajax_response_order_detail($order_details->toArray());
+            $response_data['html_order_detail'] = ajax_response_order_detail($contract->toArray(), $order_details->toArray());
             $response_data['html_total_price']  = format_money($total_price);
             $result_update = true;
 
@@ -151,7 +151,7 @@ class OrderDetailController extends Controller
                 }
 
                 // START SET RESPONSE
-                $response_data['html_order_detail'] = ajax_response_order_detail($order_details->toArray());
+                $response_data['html_order_detail'] = ajax_response_order_detail($contract->toArray(), $order_details->toArray());
                 $response_data['html_total_price']  = format_money($total_price);
                 $result_update = true;
 

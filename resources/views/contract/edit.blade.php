@@ -112,7 +112,7 @@
                     </td>
                 </tr>
             </table>
-        {!! Form::close()  !!}
+        {!! Form::close() !!}
     </div>
 
     <h5>Phần 2: Gọi món</h5>
@@ -130,14 +130,14 @@
                 <button type="button" style="margin-right: 10px" class="btn btn-secondary btn-sm add_order"><i class="fa fa-plus"></i> Thêm món</button>
             </span>
             <span class="bound-button">
-                <button type="button" style="margin-right: 10px" class="edit btn btn-success btn-sm process_payment"><i class="fa fa-hand-o-right"></i> Click thanh toán!</button>
+                <button type="button" style="margin-right: 10px" class="@if ($contract->total_price == 0) hide @endif edit btn btn-success btn-sm process_payment"><i class="fa fa-hand-o-right"></i> Click thanh toán!</button>
             </span>
         @endif
         <span class="bound-button">
-            <button type="button" class="edit btn btn-primary btn-sm"><i class="fa fa-print"></i> In hóa đơn</button>
+            <button type="button" class="@if ($contract->total_price == 0) hide @endif print btn btn-primary btn-sm" onclick="get_order_detail_printing({{$contract->id}})"><i class="fa fa-print"></i> In hóa đơn</button>
         </span>
         <div class="table-responsive column_table_order_detail">
-            <table class="table table-bordered">
+            <table class="table table-bordered ">
                 <thead>
                     <th>No</th>
                     <th>Tên món</th>
@@ -167,19 +167,23 @@
                 </tbody>
             </table>
         </div>
-        <h5 style="float: left">
-            Tổng tiền: <span class="column_total_price">{{format_money($contract->total_price)}}</span>
-        </h5>
-        <h5 style="float: right">
-            Tình trạng:
-            <span class="column_state">
-                @if ($contract->is_finished)
-                    <span style="color: green"><i class="fa fa-check" style="color: green"></i> Đã thanh toán</span>
-                @else
-                    <span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa thanh toán</span>
-                @endif
+        <div style="float: left; width: 100%">
+            <h5 style="float: left">
+                Tổng tiền: <span class="column_total_price">{{format_money($contract->total_price)}}</span>
+            </h5>
+            <h5 style="float: right">
+                Tình trạng:
+                <span class="column_state">
+                    @if ($contract->total_price == 0)
+                        <span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa gọi món</span>
+                    @elseif ($contract->is_finished)
+                        <span style="color: green"><i class="fa fa-check" style="color: green"></i> Đã thanh toán</span>
+                    @else
+                        <span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa thanh toán</span>
+                    @endif
             </span>
-        </h5>
+            </h5>
+        </div>
     </div>
 
     <div style="float: left; width: 100%; margin-top: 20px">

@@ -76,12 +76,12 @@
                             <span>Số HĐ: <a href="{{ url('/business/contract/edit/contract_id/' . $contract->id) }}">HD00{{$contract->id}}</a></span><br/>
                             <span style="font-weight: normal">{{$contract->created_at}}</span>
                             @if (!$contract->is_finished)
-                                <span class="bound-button" style="margin-top: 20px">
-                                    <button type="button" class="edit btn btn-success btn-sm process_payment" style="margin-top: 10px"><i class="fa fa-hand-o-right"></i> Click thanh toán!</button>
+                                <span class="bound-button" style="margin-top: 20px;">
+                                    <button type="button" class="@if ($contract->total_price == 0) hide @endif btn btn-success btn-sm process_payment" style="margin-top: 10px"><i class="fa fa-hand-o-right"></i> Click thanh toán!</button>
                                 </span>
                             @endif
                             <span class="bound-button">
-                                <button type="button" class="edit btn btn-primary btn-sm" style="margin-top: 10px"><i class="fa fa-print"></i> In hóa đơn</button>
+                                <button type="button" class="@if ($contract->total_price == 0) hide @endif print btn btn-primary btn-sm" style="margin-top: 10px" onclick="get_order_detail_printing({{$contract->id}})"><i class="fa fa-print"></i> In hóa đơn</button>
                             </span>
                             <input type="hidden" class="contract_id" name="contract_id" value="{{$contract->id}}">
                         </th>
@@ -95,7 +95,7 @@
                     <tr>
                         <th class="head2">Món đã gọi</th>
                         <td colspan="3" class="child">
-                            <div class="table-responsive column_table_order_detail">
+                            <div class="table-responsive column_table_order_detail @if ($contract->total_price == 0) hide @endif">
                                 <table class="table table-bordered">
                                     <thead>
                                         <th>No</th>
@@ -134,7 +134,9 @@
                     <tr>
                         <th class="head2">Trạng thái</th>
                         <td colspan="3" class="child column_state">
-                            @if ($contract->is_finished)
+                            @if ($contract->total_price == 0)
+                                <span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa gọi món</span>
+                            @elseif ($contract->is_finished)
                                 <span style="color: green"><i class="fa fa-check" style="color: green"></i> Đã thanh toán</span>
                             @else
                                 <span style="color: red"><i class="fa fa-warning" style="color: red"></i> Chưa thanh toán</span>

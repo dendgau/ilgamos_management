@@ -68,9 +68,9 @@
         </div>
     </div>
     <div class="table-responsive">
-        @if(!empty($contracts))
+        @if($contracts)
             @foreach ($contracts as $contract)
-                <table class="table table-contract">
+                <table class="table table-contract" style="margin-top: 5px">
                     <tr>
                         <th class="head1" rowspan="5" style="border-top: 1px dotted black;">
                             <span>Số HĐ: <a href="{{ url('/business/contract/edit/contract_id/' . $contract->id) }}">HD00{{$contract->id}}</a></span><br/>
@@ -110,7 +110,7 @@
                                             @if($o->amount > 0)
                                                 <tr>
                                                     <td style="text-align: center">{{$key + 1}}</td>
-                                                    <td>{{$o->product_name}}</td>
+                                                    <td>{{$o->product_name_vi}}</td>
                                                     <td style="text-align: center">{{format_money($o->unit_price)}}</td>
                                                     <td style="text-align: center">x{{$o->amount}}</td>
                                                     <td style="text-align: center">{{format_money($o->total_price)}}</td>
@@ -149,14 +149,13 @@
                     </tr>
                 </table>
             @endforeach
+        @else
+            <p>Không có hóa đơn nào</p>
         @endif
     </div>
     <div class="row">
         <div class="col-8">
             {{$links}}
-        </div>
-        <div class="col-4" style="text-align: right">
-            <a class="btn btn-warning" href="{{ url('/business/contract/create') }}" role="button"><i class="fa fa-file-text-o"></i> Tạo hóa đơn</a>
         </div>
     </div>
 
@@ -175,7 +174,7 @@
                         <?php foreach ($menu as $r): ?>
                             <optgroup label="<?php echo $r['label'] ?>">
                                 <?php foreach ($r['data'] as $p): ?>
-                                    <option value="<?php echo $p['id'] ?>"><?php echo $p['product_name'] ?></option>
+                                    <option value="<?php echo $p['id'] ?>"><?php echo $p['product_name_vi'] ?></option>
                                 <?php endforeach; ?>
                             </optgroup>
                         <?php endforeach; ?>

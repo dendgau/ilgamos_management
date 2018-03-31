@@ -52,12 +52,13 @@ class OrderDetailController extends Controller
 
                     // Initial new order detail
                     $new_order_detail = new OrderDetailModel();
-                    $new_order_detail->amount        = 1;
-                    $new_order_detail->contract_id   = $contract_id;
-                    $new_order_detail->product_id    = $product_id;
-                    $new_order_detail->product_name  = $product_info->product_name;
-                    $new_order_detail->unit_price    = $product_price_detail->price;
-                    $new_order_detail->total_price   = $product_price_detail->price;
+                    $new_order_detail->amount           = 1;
+                    $new_order_detail->contract_id      = $contract_id;
+                    $new_order_detail->product_id       = $product_id;
+                    $new_order_detail->product_name_vi  = $product_info->product_name_vi;
+                    $new_order_detail->product_name_en  = $product_info->product_name_en;
+                    $new_order_detail->unit_price       = $product_price_detail->price;
+                    $new_order_detail->total_price      = $product_price_detail->price;
 
                     if (!$new_order_detail->save()) {
                         throw new \Exception('Can not add order detail');
@@ -167,6 +168,32 @@ class OrderDetailController extends Controller
             'code'    => $result_update ? 1 : 0,
             'data'    => $response_data,
             'message' => $response_message
+        ]);
+    }
+
+    function ajax_get_order_detail_printing(Request $request) {
+        if (!$request->ajax() || !$request->isMethod('post')) {
+            return response()->json(['code' => '0', 'message' => 'The request is not ajax post']);
+        }
+
+        if (!($contract_id = $request->get('contract_id')) && !is_numeric($contract_id)) {
+            return response()->json(['code' => '0', 'message' => 'Can not get contract id']);
+        }
+
+        if (!$contract = ContractModel::where('id', '=', $contract_id)->first()) {
+            throw new \Exception('Can not get contract');
+        }
+
+        if (!$order_details = $contract->order_detail) {
+            throw new \Exception('Can not get order detail');
+        }
+
+        $response_data['html_order_detail'] = ajax_get_order_detail_printing($contract->toArray(), $order_details->toArray());
+
+        return response()->json([
+            'code'    => 1,
+            'data'    => $response_data,
+            'message' => ''
         ]);
     }
 }

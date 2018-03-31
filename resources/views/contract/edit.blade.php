@@ -151,9 +151,9 @@
                         @if($o->amount > 0)
                             <tr>
                                 <td style="text-align: center">{{$key + 1}}</td>
-                                <td>{{$o->product_name}}</td>
+                                <td>{{$o->product_name_vi}}</td>
                                 <td style="text-align: center">{{format_money($o->unit_price)}}</td>
-                                <td style="text-align: center"x{{$o->amount}}</td>
+                                <td style="text-align: center">x{{$o->amount}}</td>
                                 <td style="text-align: center">{{format_money($o->total_price)}}</td>
                                 <td style="text-align: center">
                                     @if (!$contract->disable && !$contract->is_finished)
@@ -206,7 +206,7 @@
                         <?php foreach ($menu as $r): ?>
                         <optgroup label="<?php echo $r['label'] ?>">
                             <?php foreach ($r['data'] as $p): ?>
-                            <option value="<?php echo $p['id'] ?>"><?php echo $p['product_name'] ?></option>
+                            <option value="<?php echo $p['id'] ?>"><?php echo $p['product_name_vi'] ?></option>
                             <?php endforeach; ?>
                         </optgroup>
                         <?php endforeach; ?>

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 class ContractController extends Controller
 {
     function show() {
-        $contracts = ContractModel::where('disable', '=', '0')->orderBy('id', 'DESC')->paginate(6);
+        $contracts = ContractModel::where('disable', '=', '0')->where('is_finished', '=', '0')->orderBy('id', 'DESC')->paginate(6);
         $links     = $contracts->links("pagination::bootstrap-4");
         $total     = $contracts->total();
 

@@ -61,7 +61,7 @@
                 </tr>
                 <tr>
                     <td colspan="4" class="child" style="border-bottom: 1px dotted black;">
-                        <button type="submit" class="btn btn-secondary btn-sm "><i class="fa fa-plus"></i> Tạo</button>
+                        <button type="submit" class="btn btn-secondary btn-sm "><i class="fa fa-plus"></i> Tạo hóa đơn</button>
                     </td>
                 </tr>
             </table>

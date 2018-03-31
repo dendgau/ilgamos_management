@@ -17,6 +17,7 @@ Route::match(array('GET','POST'), '/business/contract/create', 'Business\Contrac
 Route::match(array('GET','POST'), 'business/contract/edit/contract_id/{contract_id}/', 'Business\ContractController@edit');
 Route::match(array('POST'), 'business/contract/delete/contract_id/{contract_id}/', 'Business\ContractController@delete');
 
+Route::get('/business/product/insert_data_to_product_table', 'Business\ProductController@insert_data_to_product_table');
 Route::get('/business/product/show', 'Business\ProductController@show');
 Route::match(array('GET','POST'),'/business/product/create', 'Business\ProductController@create');
 Route::match(array('GET','POST'),'/business/product/edit/product_id/{product_id}', 'Business\ProductController@edit');
@@ -24,3 +25,4 @@ Route::match(array('GET','POST'),'/business/product/edit/product_id/{product_id}
 Route::post('/business/contract/ajax_change_payment_state', 'Business\ContractController@ajax_change_payment_state');
 Route::post('/business/order_detail/ajax_change_quantity_order_detail', 'Business\OrderDetailController@ajax_change_quantity_order_detail');
 Route::post('/business/order_detail/ajax_add_order_detail', 'Business\OrderDetailController@ajax_add_order_detail');
+Route::post('/business/order_detail/ajax_get_order_detail_printing', 'Business\OrderDetailController@ajax_get_order_detail_printing');

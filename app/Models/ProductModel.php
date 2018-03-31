@@ -9,15 +9,45 @@ class ProductModel extends IL_Model
     protected $table = "product";
 
     const PRODUCT_TYPES = array(
-        'wine'      => 3,
-        'food'      => 1,
-        'beverage'  => 2,
+        'food'          => 1,
+        'beer'          => 2,
+        'alcohol_free'  => 3,
+        'soft_drink'    => 4,
+        'tea'           => 5,
+        'coffee'        => 6,
+        'arperatif'     => 7,
+        'fresh_juices'  => 8,
+        'smoothies'     => 9,
+        'whiskey'       => 10,
+        'wine'          => 11,
+        'tequila'       => 12,
+        'rum'           => 13,
+        'liquier'       => 14,
+        'gin'           => 15,
+        'vodka'         => 16,
+        'bourbon'       => 17,
+        'cocktail'      => 18,
     );
 
     const PRODUCT_TYPES_LANG = array(
-        'wine'      => 'Rượu',
-        'food'      => 'Đồ ăn',
-        'beverage'  => 'Đồ uống',
+        'food'          => "Đồ ăn",
+        'beer'          => "Bia",
+        'alcohol_free'  => "Nước khoáng",
+        'soft_drink'    => "Nước ngọt",
+        'tea'           => "Trà",
+        'coffee'        => "Coffee",
+        'arperatif'     => "Arperatif",
+        'fresh_juices'  => "Nước trái cây",
+        'smoothies'     => "Sinh tố",
+        'whiskey'       => "Whiskey",
+        'wine'          => "Rượu",
+        'tequila'       => "Tequila",
+        'rum'           => "Rum",
+        'liquier'       => "Liquier",
+        'gin'           => "Gin",
+        'vodka'         => "Vodka",
+        'bourbon'       => "Bourbon",
+        'cocktail'      => "Cocktail",
     );
 
     function product_detail() {

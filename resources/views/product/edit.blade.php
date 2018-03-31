@@ -70,10 +70,17 @@
                     </th>
                 </tr>
                 <tr>
-                    <th class="head2" style="border-top: 1px dotted black;">Tên sản phẩm</th>
+                    <th class="head2" style="border-top: 1px dotted black;">Tên sản phẩm (Tiếng Việt)</th>
                     <td class="child" style="border-top: 1px dotted black; border-right: 1px dotted black;">
-                        {!!  Form::text('product_name', count($errors->all()) > 0 ? old('product_name') : $product->product_name, ['class' => 'form-control', 'placeholder' => 'Nhập tên sản phẩm']) !!}
-                        <span class="text-danger" @if(!$errors->has('product_name'))style="display: none"@endif><i class="fa fa-times-circle"></i> {{ $errors->first('product_name') }}</span>
+                        {!!  Form::text('product_name_vi', count($errors->all()) > 0 ? old('product_name_vi') : $product->product_name_vi, ['class' => 'form-control', 'placeholder' => 'Nhập tên sản phẩm (Tiếng Việt)']) !!}
+                        <span class="text-danger" @if(!$errors->has('product_name_vi'))style="display: none"@endif><i class="fa fa-times-circle"></i> {{ $errors->first('product_name_vi') }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="head2">Tên sản phẩm (Tiếng Anh)</th>
+                    <td class="child" style="border-right: 1px dotted black;">
+                        {!!  Form::text('product_name_en', count($errors->all()) > 0 ? old('product_name_en') : $product->product_name_en, ['class' => 'form-control', 'placeholder' => 'Nhập tên sản phẩm (Tiếng Anh)']) !!}
+                        <span class="text-danger" @if(!$errors->has('product_name_en'))style="display: none"@endif><i class="fa fa-times-circle"></i> {{ $errors->first('product_name_en') }}</span>
                     </td>
                 </tr>
                 <tr>

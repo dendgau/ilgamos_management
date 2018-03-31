@@ -42,7 +42,7 @@
                 @foreach ($products as $key=>$p)
                     <tr>
                         <td>{{$key + 1}}</td>
-                        <td style="text-align: left">{{$p->product_name}}</td>
+                        <td style="text-align: left">{{$p->product_name_vi}}</td>
                         <td>
                             {{get_product_type_name_by_id($p->product_type)}}
                         </td>

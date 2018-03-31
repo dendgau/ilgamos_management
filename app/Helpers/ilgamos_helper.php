@@ -139,7 +139,7 @@ if ( ! function_exists('ajax_response_order_detail'))
                                 <?php if ($o['amount'] > 0): ?>
                                     <tr>
                                         <td style="text-align: center"><?php echo($key + 1) ?></td>
-                                        <td><?php echo $o['product_name'] ?></td>
+                                        <td><?php echo $o['product_name_vi'] ?></td>
                                         <td style="text-align: center"><?php echo format_money($o['unit_price']) ?></td>
                                         <td style="text-align: center">x<?php echo $o['amount'] ?></td>
                                         <td style="text-align: center"><?php echo format_money($o['total_price']) ?></td>
@@ -160,6 +160,67 @@ if ( ! function_exists('ajax_response_order_detail'))
             $html_order_detail = ob_get_contents();
             ob_end_clean();
         }
+
+        return $html_order_detail;
+    }
+}
+
+if ( ! function_exists('ajax_get_order_detail_printing')) {
+    function ajax_get_order_detail_printing($contract_info, $order_details) {
+        ob_start();
+        ?>
+            <div style="width: 100%; float: left">
+                <h5 style="text-align: center">ILGAMOS RETAURANT</h5>
+                <p style="text-align: center; margin-bottom: 0px; font-size: 12px">********************</p>
+                <p style="text-align: center; margin-bottom: 0px; font-size: 12px">42 To Hien Thanh - Nha Trang - Khanh Hoa</p>
+                <p style="text-align: center; margin-bottom: 0px; font-size: 12px">0258 3510 843 - 0903 557 343</p>
+                <p style="text-align: center; font-size: 12px; margin-bottom: 0px">hoangduyhotel@yahoo.com.vn</p>
+                <br>
+                <p style="text-align: center; margin-bottom: 0px; font-size: 12px">---------------------------------------------------</p>
+                <p style="text-align: left; font-size: 12px; margin-bottom: 0px; float: left; width: 100%">
+                    <span style="float:left">No: <?php echo 'HD00' . $contract_info['id'] ?></span>
+                    <span style="float:right">Date: <?php echo Carbon\Carbon::parse($contract_info['created_at'])->format('d/m/Y'); ?></span>
+                </p>
+                <p style="text-align: left; font-size: 12px; margin-bottom: 0px; float: left; width: 100%">
+                    <span style="float:left">Cashier: Vi Quynh Nhu</span>
+                    <span style="float:right">Print: <?php echo Carbon\Carbon::parse($contract_info['created_at'])->format('H:i:s'); ?></span>
+                </p>
+                <p style="text-align: center; margin-bottom: 0px; font-size: 12px; float: left">---------------------------------------------------</p>
+                <table style="width: 250px">
+                    <tbody>
+                    <?php foreach ($order_details as $key => $o): ?>
+                    <tr>
+                        <td>
+                            <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                <b><?php echo $key + 1; ?>.</b> <?php echo $o['product_name_en'] ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 15px">
+                            <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                <span style="float:left; text-align: left; width: 82px"><?php echo format_money($o['unit_price']); ?></span>
+                                <span style="float:left; text-align: center; width: 82px"><?php echo 'x'.$o['amount']; ?></span>
+                                <span style="float:right; text-align: right; width: 82px"><b><?php echo format_money($o['total_price']); ?></b></span>
+                            </p>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <p style="text-align: center; margin-bottom: 0px; font-size: 12px; float: left">---------------------------------------------------</p>
+                <p style="text-align: left; font-size: 12px; margin-bottom: 0px; float: left; width: 100%">
+                    <span style="float:left; font-size: 15px"><b>GRAND TOTAL:</b></span>
+                    <span style="float:right; font-size: 15px"><b><?php echo format_money($contract_info['total_price']); ?></b></span>
+                </p>
+                <p style="text-align: center; margin-bottom: 0px; font-size: 12px; float: left">---------------------------------------------------</p>
+
+                <h6 style="width: 100%;text-align: center;margin-top: 25px;float: left;">Thank you very much</h6>
+                <h6 style="text-align: center;width: 100%;float: left;">Hope to see you again!!</h6>
+            </div>
+        <?php
+        $html_order_detail = ob_get_contents();
+        ob_end_clean();
 
         return $html_order_detail;
     }

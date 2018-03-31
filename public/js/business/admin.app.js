@@ -20,7 +20,10 @@ $(document).ready(function() {
                     me.closest('.table-contract').find('.column_state').html('<span style="color: green"><i class="fa fa-check" style="color: green"></i> Đã thanh toán</span>');
                     // For hard code screen update
                     me.closest('body').find('.btn_update_contract').remove();
+                    // For hard code list contract
+                    me.closest('table.table-contract').remove();
                     stop_ajax_process(me, false, '');
+                    get_order_detail_printing(contract_id);
                 } else {
                     show_dialog('error', 'Không thể cập nhật trạng thái hóa đơn.');
                     stop_ajax_process(me, true, '');
@@ -171,7 +174,7 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '#modal_print_agree', function(){
-        $("#modal_print").modal('close');
+        $("#modal_print").modal('hide');
         $("#modal_print_sector").print();
     });
 });

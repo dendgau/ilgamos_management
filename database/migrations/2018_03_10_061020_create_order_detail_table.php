@@ -17,7 +17,8 @@ class CreateOrderDetailTable extends Migration
             $table->increments('id');
             $table->integer('contract_id', false, true);
             $table->integer('product_id', false, true);
-            $table->string('product_name');
+            $table->string('product_name_vi');
+            $table->string('product_name_en');
             $table->integer('amount', false, true)->default(0);
             $table->bigInteger('unit_price', false, true)->default(0);
             $table->bigInteger('total_price', false, true)->default(0);

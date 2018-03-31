@@ -53,7 +53,7 @@ function get_order_detail_printing(contract_id) {
     }
 
     $.ajax({
-        url: "/business/contract/ajax_get_order_detail_printing",
+        url: "/business/order_detail/ajax_get_order_detail_printing",
         type: "POST",
         data: {
             _token     : get_csrf_token(),
@@ -61,6 +61,7 @@ function get_order_detail_printing(contract_id) {
         },
         success: function(resp) {
             if (resp.code == 1) {
+                $('#modal_print #modal_print_sector').html(resp.data.html_order_detail);
                 $('#modal_print').modal('show');
             } else {
                 show_dialog('error', 'Không thể cập nhật trạng thái hóa đơn.');

@@ -16,7 +16,8 @@ class CreateProductTable extends Migration
         Schema::create('product', function (Blueprint $table) {
             $table->increments('id');
             $table->string('column_name')->nullable(false);
-            $table->string('product_name')->nullable(false);
+            $table->string('product_name_vi')->nullable(false);
+            $table->string('product_name_en')->nullable(false);
             $table->integer('product_type', false, true)->default(1);
             $table->tinyInteger('disable', false, true)->default(0);
             $table->timestamps();

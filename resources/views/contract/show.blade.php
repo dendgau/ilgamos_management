@@ -107,10 +107,12 @@
                                         <th>Thêm/Xóa</th>
                                     </thead>
                                     <tbody>
+                                        <?php $count = 0; ?>
                                         @foreach ($contract->order_detail as $key => $o)
                                             @if($o->amount > 0)
+                                                <?php $count++; ?>
                                                 <tr>
-                                                    <td style="text-align: center">{{$key + 1}}</td>
+                                                    <td style="text-align: center">{{$count}}</td>
                                                     <td>{{$o->product_name_vi}}</td>
                                                     <td style="text-align: center">{{format_money($o->unit_price)}}</td>
                                                     <td style="text-align: center">x{{$o->amount}}</td>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=0">
-        <title>Ilgamos Bar</title>
+        <title>Ilgamos Restaurant</title>
 
         <!-- Start Styles -->
         <link rel="stylesheet" href="{{asset('css/bootstrap/bootstrap.min.css')}}">
@@ -19,7 +19,7 @@
         <div id="sidebar">
             <div id="header-wrapper">
                 <div id="header">
-                    <h5>ILGAMOS BAR</h5>
+                    <h5>ILGAMOS RESTAURANT</h5>
                 </div>
                 <ul class="left-menu-bar">
                     <li class="{{active_menu('/business/contract')}}"><a href="{{ url('/business/contract/show') }}"><i class="fa fa-cart-plus"></i> Quản lý bán hàng</a></li>
@@ -35,7 +35,7 @@
         </div>
         <div id="body">
             <div class="alert alert-dark" style="border-radius: 0px; margin-bottom: 0px">
-                <span>Ilgamos Bar</span>
+                <span>Ilgamos Restaurant</span>
                 <i class="fa fa-angle-right"></i>
                 @section('title')
                 @show

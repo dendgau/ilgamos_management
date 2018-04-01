@@ -29,7 +29,7 @@ if ( ! function_exists('format_money'))
 {
 	function format_money($number) {
 	    if (!is_numeric($number)) {
-	        throw new Exception('Ilgamos bar helpers: Can not use string for format money');
+	        throw new Exception('Ilgamos Restaurant helpers: Can not use string for format money');
         }
         return number_format($number, 0, '.', ',') . ' vnđ';
 	}
@@ -39,7 +39,7 @@ if ( ! function_exists('calculate_total_price'))
 {
     function calculate_total_price($order_details) {
         if (!is_array($order_details)) {
-            throw new Exception('Ilgamos bar helpers: Can not get order detail');
+            throw new Exception('Ilgamos Restaurant helpers: Can not get order detail');
         }
 
         $total_price = 0;
@@ -117,7 +117,7 @@ if ( ! function_exists('ajax_response_order_detail'))
 {
     function ajax_response_order_detail($contract_info, $order_details) {
         if (!is_array($order_details)) {
-            throw new Exception('Ilgamos bar helpers: Can not get order detail');
+            throw new Exception('Ilgamos Restaurant helpers: Can not get order detail');
         }
 
         $html_order_detail = false;
@@ -135,10 +135,12 @@ if ( ! function_exists('ajax_response_order_detail'))
                             <th>Thêm/Xóa</th>
                         </thead>
                         <tbody>
+                            <?php $count = 0; ?>
                             <?php foreach ($order_details as $key => $o): ?>
                                 <?php if ($o['amount'] > 0): ?>
+                                    <?php $count++; ?>
                                     <tr>
-                                        <td style="text-align: center"><?php echo($key + 1) ?></td>
+                                        <td style="text-align: center"><?php echo($count) ?></td>
                                         <td><?php echo $o['product_name_vi'] ?></td>
                                         <td style="text-align: center"><?php echo format_money($o['unit_price']) ?></td>
                                         <td style="text-align: center">x<?php echo $o['amount'] ?></td>
@@ -188,23 +190,27 @@ if ( ! function_exists('ajax_get_order_detail_printing')) {
                 <p style="text-align: center; margin-bottom: 0px; font-size: 12px; float: left">---------------------------------------------------</p>
                 <table style="width: 250px">
                     <tbody>
+                    <?php $count = 0; ?>
                     <?php foreach ($order_details as $key => $o): ?>
-                    <tr>
-                        <td>
-                            <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
-                                <b><?php echo $key + 1; ?>.</b> <?php echo $o['product_name_en'] ?>
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-bottom: 15px">
-                            <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
-                                <span style="float:left; text-align: left; width: 82px"><?php echo format_money($o['unit_price']); ?></span>
-                                <span style="float:left; text-align: center; width: 82px"><?php echo 'x'.$o['amount']; ?></span>
-                                <span style="float:right; text-align: right; width: 82px"><b><?php echo format_money($o['total_price']); ?></b></span>
-                            </p>
-                        </td>
-                    </tr>
+                        <?php if ($o['amount'] > 0): ?>
+                            <?php $count++; ?>
+                            <tr>
+                                <td>
+                                    <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                        <b><?php echo $count; ?>.</b> <?php echo $o['product_name_en'] ?>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 15px">
+                                    <p style="text-align: justify; margin-bottom: 0px; font-size: 12px">
+                                        <span style="float:left; text-align: left; width: 82px"><?php echo format_money($o['unit_price']); ?></span>
+                                        <span style="float:left; text-align: center; width: 82px"><?php echo 'x'.$o['amount']; ?></span>
+                                        <span style="float:right; text-align: right; width: 82px"><b><?php echo format_money($o['total_price']); ?></b></span>
+                                    </p>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                     </tbody>
                 </table>

@@ -26,3 +26,5 @@ Route::post('/business/contract/ajax_change_payment_state', 'Business\ContractCo
 Route::post('/business/order_detail/ajax_change_quantity_order_detail', 'Business\OrderDetailController@ajax_change_quantity_order_detail');
 Route::post('/business/order_detail/ajax_add_order_detail', 'Business\OrderDetailController@ajax_add_order_detail');
 Route::post('/business/order_detail/ajax_get_order_detail_printing', 'Business\OrderDetailController@ajax_get_order_detail_printing');
+
+Route::get('/business/revenue/show', 'Business\RevenueController@show');

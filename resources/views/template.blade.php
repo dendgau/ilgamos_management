@@ -25,7 +25,7 @@
                     <li class="{{active_menu('/business/contract')}}"><a href="{{ url('/business/contract/show') }}"><i class="fa fa-cart-plus"></i> Quản lý bán hàng</a></li>
                     <li class="{{active_menu('/business/product')}}"><a href="{{ url('/business/product/show') }}"><i class="fa fa-coffee"></i> Quản lý sản phẩm</a></li>
                     <li class="{{active_menu('/business/input')}}"><a href=""><i class="fa fa-bank"></i> Quản lý phiếu chi</a></li>
-                    <li class="{{active_menu('/business/revenue')}}"><a href=""><i class="fa fa-area-chart"></i> Thống kê doanh thu</a></li>
+                    <li class="{{active_menu('/business/revenue')}}"><a href="{{ url('/business/revenue/show') }}"><i class="fa fa-area-chart"></i> Thống kê doanh thu</a></li>
                 </ul>
                 <section id="footer">
                     <p>Develop by <a href="https://github.com/dendgau">Duy Trần</a></p>

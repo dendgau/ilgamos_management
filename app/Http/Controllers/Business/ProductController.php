@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
-use App\Models\ContractModel;
 use App\Models\ProductDetailModel;
 use App\Models\ProductModel;
 use Illuminate\Http\Request;
@@ -12,8 +11,13 @@ use Illuminate\Support\Facades\Redirect;
 
 class ProductController extends Controller
 {
-    function show() {
-        $products  = ProductModel::orderBy('product_type', 'DESC')->paginate(15);
+    function show(Request $request) {
+        $products  = ProductModel::orderBy('product_type', 'DESC');
+        if ($keyword = $request->get('keyword')) {
+            $products->where('product_name_vi', 'like', '%' . $keyword . '%');
+        }
+
+        $products  = $products->paginate(15);
         $links     = $products->links("pagination::bootstrap-4");
         $total     = $products->total();
 
@@ -21,6 +25,7 @@ class ProductController extends Controller
             'products'      => $products,
             'links'         => $links,
             'total'         => $total,
+            'keyword'       => $keyword,
         ));
     }
 

@@ -59,6 +59,7 @@
 
 @section('content')
     <h5>Danh sách hóa đơn</h5>
+    <hr>
     <div class="row">
         <div class="col-8">
             {{$links}}
@@ -70,7 +71,7 @@
     <div class="table-responsive">
         @if($contracts)
             @foreach ($contracts as $contract)
-                <table class="table table-contract" style="margin-top: 5px">
+                <table class="table table-contract" style="margin-top: 10px">
                     <tr>
                         <th class="head1" rowspan="5" style="border-top: 1px dotted black;">
                             <span>Số HĐ: <a href="{{ url('/business/contract/edit/contract_id/' . $contract->id) }}">HD00{{$contract->id}}</a></span><br/>

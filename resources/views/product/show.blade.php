@@ -19,6 +19,15 @@
 
 @section('content')
     <h5>Danh sách sản phẩm</h5>
+
+    <form action="{{Request::url()}}" class="navbar-form navbar-left" role="search">
+        <div class="form-group" style="width: 700px;display: inline-table; margin-top: 15px; margin-bottom: 0px">
+            <input value="{{$keyword}}" type="text" class="form-control" name="keyword" placeholder="Nhập tên sản phẩm muốn kiếm ở đây..." style="width: 500px; float: left">
+            <button type="submit" class="btn btn-default" style="float: left; margin-left: 5px"><i class="fa fa-search"></i>Tìm kiếm</button>
+        </div>
+    </form>
+    <hr>
+
     <div class="row">
         <div class="col-8">
             {{$links}}
@@ -66,9 +75,6 @@
     <div class="row">
         <div class="col-8">
             {{$links}}
-        </div>
-        <div class="col-4" style="text-align: right">
-            <a class="btn btn-warning" href="{{ url('/business/product/create') }}" role="button"><i class="fa fa-plus"></i> Tạo sản mới</a>
         </div>
     </div>
 @endsection
